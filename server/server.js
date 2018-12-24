@@ -18,14 +18,11 @@ io.on('connection', (socket) => {
         console.log(`Disconnected from user`)
     })
 
-    socket.emit('newMessage', {
-        from: 'Yi',
-        text: 'It is cloudy in Mountain View today.',
-        createdAt: '27746551'
-    })
-
     socket.on('createMessage', (message) => {
-        console.log('Client createdMessage:', message)
+        io.emit('newMessage', {
+            from: message.from,
+            text: message.text
+        })
     })
 })
 
