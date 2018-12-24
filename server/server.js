@@ -11,11 +11,21 @@ const io = socketIO(server)
 
 app.use(express.static(publicPath))
 
-io.on('connection', (serverSocket) => {
+io.on('connection', (socket) => {
     console.log('New user connected')
 
-    serverSocket.on('disconnect', () => {
+    socket.on('disconnect', () => {
         console.log(`Disconnected from user`)
+    })
+
+    socket.emit('newMessage', {
+        from: 'Yi',
+        text: 'It is cloudy in Mountain View today.',
+        createdAt: '27746551'
+    })
+
+    socket.on('createMessage', (message) => {
+        console.log('Client createdMessage:', message)
     })
 })
 
